@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.29.1" theme-name="Stellar" theme-version="1.29.1">
-  <meta name="robots" content="none">
+  
   <meta name="generator" content="Hexo 7.3.0">
   <meta http-equiv='x-dns-prefetch-control' content='on' />
   
@@ -17,20 +17,34 @@
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
   <meta name="theme-color" content="#f9fafb">
   
-  <title>LFWQSP2641's Blogs</title>
+  <title>使用 Azure 学生订阅创建免费支持 IPv4 和 IPv6 的 Azure 虚拟机 - LFWQSP2641's Blogs</title>
 
   
-    <meta property="og:type" content="website">
-<meta property="og:title" content="LFWQSP2641&#39;s Blogs">
-<meta property="og:url" content="https://www.lfwqsp2641.me/404.html">
+    <meta name="description" content="创建支持 IPv4 和 IPv6 的 Azure 虚拟机">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Azure 学生订阅创建免费支持 IPv4 和 IPv6 的 Azure 虚拟机">
+<meta property="og:url" content="https://www.lfwqsp2641.me/2025/02/16/azure-VM-creation-guide/index.html">
 <meta property="og:site_name" content="LFWQSP2641&#39;s Blogs">
+<meta property="og:description" content="创建支持 IPv4 和 IPv6 的 Azure 虚拟机">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.lfwqsp2641.me/image/post_illustrations/azure-VM-creation-guide/Screenshot2025-02-16144807.png">
+<meta property="og:image" content="https://www.lfwqsp2641.me/image/post_illustrations/azure-VM-creation-guide/Screenshot2025-02-16145458.png">
+<meta property="og:image" content="https://www.lfwqsp2641.me/image/post_illustrations/azure-VM-creation-guide/Screenshot2025-02-16150537.png">
+<meta property="og:image" content="https://www.lfwqsp2641.me/image/post_illustrations/azure-VM-creation-guide/Screenshot2025-02-16151409.png">
+<meta property="og:image" content="https://www.lfwqsp2641.me/image/post_illustrations/azure-VM-creation-guide/Screenshot2025-02-16151142.png">
+<meta property="og:image" content="https://www.lfwqsp2641.me/image/post_illustrations/azure-VM-creation-guide/Screenshot2025-02-16152003.png">
+<meta property="article:published_time" content="2025-02-16T04:52:21.000Z">
+<meta property="article:modified_time" content="2025-02-16T07:40:20.263Z">
 <meta property="article:author" content="LFWQSP2641">
+<meta property="article:tag" content="azure">
+<meta property="article:tag" content="IPv6">
+<meta property="article:tag" content="虚拟机">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.lfwqsp2641.me/image/post_illustrations/azure-VM-creation-guide/Screenshot2025-02-16144807.png">
   
   
   
-  
+  <meta name="keywords" content="azure,IPv6,虚拟机">
 
   <!-- feed -->
   
@@ -47,7 +61,7 @@
 </head>
 <body>
 
-<div class="l_body s:aa index tech" id="start" layout="404" ><aside class="l_left"><div class="leftbar-container">
+<div class="l_body s:aa content tech" id="start" layout="post" ><aside class="l_left"><div class="leftbar-container">
 
 
 <header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/image/79988645_p0.jpg" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">LFWQSP2641's Blogs</div></a></div></header>
@@ -59,28 +73,110 @@
 <nav class="menu dis-select"><a class="nav-item active" title="博客" href="/" style="color:#1BCDFC"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M5.879 2.879C5 3.757 5 5.172 5 8v8c0 2.828 0 4.243.879 5.121C6.757 22 8.172 22 11 22h2c2.828 0 4.243 0 5.121-.879C19 20.243 19 18.828 19 16V8c0-2.828 0-4.243-.879-5.121C17.243 2 15.828 2 13 2h-2c-2.828 0-4.243 0-5.121.879M8.25 17a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75M9 12.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zM8.25 9A.75.75 0 0 1 9 8.25h6a.75.75 0 0 1 0 1.5H9A.75.75 0 0 1 8.25 9" clip-rule="evenodd"/><path fill="currentColor" d="M5.235 4.058C5 4.941 5 6.177 5 8v8c0 1.823 0 3.058.235 3.942L5 19.924c-.975-.096-1.631-.313-2.121-.803C2 18.243 2 16.828 2 14v-4c0-2.829 0-4.243.879-5.121c.49-.49 1.146-.707 2.121-.803zm13.53 15.884C19 19.058 19 17.822 19 16V8c0-1.823 0-3.059-.235-3.942l.235.018c.975.096 1.631.313 2.121.803C22 5.757 22 7.17 22 9.999v4c0 2.83 0 4.243-.879 5.122c-.49.49-1.146.707-2.121.803z" opacity=".5"/></svg></a><a class="nav-item" title="社交" target="_blank" rel="noopener" href="https://github.com/LFWQSP2641" style="color:#F44336"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="m13.629 20.472l-.542.916c-.483.816-1.69.816-2.174 0l-.542-.916c-.42-.71-.63-1.066-.968-1.262c-.338-.197-.763-.204-1.613-.219c-1.256-.021-2.043-.098-2.703-.372a5 5 0 0 1-2.706-2.706C2 14.995 2 13.83 2 11.5v-1c0-3.273 0-4.91.737-6.112a5 5 0 0 1 1.65-1.651C5.59 2 7.228 2 10.5 2h3c3.273 0 4.91 0 6.113.737a5 5 0 0 1 1.65 1.65C22 5.59 22 7.228 22 10.5v1c0 2.33 0 3.495-.38 4.413a5 5 0 0 1-2.707 2.706c-.66.274-1.447.35-2.703.372c-.85.015-1.275.022-1.613.219c-.338.196-.548.551-.968 1.262" opacity=".5"/><path fill="currentColor" d="M10.99 14.308c-1.327-.978-3.49-2.84-3.49-4.593c0-2.677 2.475-3.677 4.5-1.609c2.025-2.068 4.5-1.068 4.5 1.609c0 1.752-2.163 3.615-3.49 4.593c-.454.335-.681.502-1.01.502c-.329 0-.556-.167-1.01-.502"/></svg></a></nav>
 </div>
 <div class="widgets">
+
+
 <widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2025/02/16/azure-VM-creation-guide/"><span class="title">使用 Azure 学生订阅创建免费支持 IPv4 和 IPv6 的 Azure 虚拟机</span></a><a class="item title" href="/2024/12/30/free-trojan/"><span class="title">利用 BPB 面板漏洞获取免费 Trojan 节点</span></a><a class="item title" href="/2025/02/16/modem-password-cracking/"><span class="title">光猫超级管理员密码获取</span></a><a class="item title" href="/2024/11/27/bypass-campus-network/"><span class="title">绕过校园网认证</span></a><a class="item title" href="/2024/11/28/qt-hot-update/"><span class="title">热更新</span></a></div></widget>
-
-
 </div>
 
 </div></aside><div class="l_main" id="main">
 
 
 
-<article class='md-text error-page'>
-  <h1><img id='error' src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/404/1c830bfcd517d.svg' alt='404'></h1>
-  <p class='what'>
-    <strong>
-      很抱歉，您访问的页面不存在
-    </strong>
-  </p>
-  <p class='why'>
-    可能是输入地址有误或该地址已被删除
-  </p>
-  <br><br>
-  <a class='button' id='back' href="/">返回主页</a>
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2025-02-16T04:52:21.000Z">2025-02-16</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2025-02-16T07:40:20.263Z">2025-02-16</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>使用 Azure 学生订阅创建免费支持 IPv4 和 IPv6 的 Azure 虚拟机</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><p>创建支持 IPv4 和 IPv6 的 Azure 虚拟机</p>
+<span id="more"></span>
+
+<h1 id="前提条件"><a href="#前提条件" class="headerlink" title="前提条件"></a>前提条件</h1><p>拥有 Azure 学生订阅。</p>
+<h1 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h1><p>本文介绍的虚拟机<strong>并非免费</strong>，因为静态 IPv4 地址是<strong>收费的</strong>。收费项目为 <code>Standard IPv4 Static Public IP</code> 或 <code>Basic IPv4 Static Public IP</code>，费用为 <a target="_blank" rel="noopener" href="https://azure.microsoft.com/zh-cn/pricing/details/ip-addresses/">$0.0036&#x2F;小时-$0.006&#x2F;小时</a>。</p>
+<p>如果想要免费使用，只能选择纯动态 IPv4 地址，或者纯 IPv6 地址（如果使用纯 IPv6，请务必从资源组中删除公网 IPv4 地址）。</p>
+<p>或者参考<a target="_blank" rel="noopener" href="https://www.jiecs.top/archives/90ab79b3/">使用负载均衡器开启动态 IPV4 和动态 IPv6 支持</a>，在 2025 年 9 月之前应该仍然可用。</p>
+<h1 id="步骤概览"><a href="#步骤概览" class="headerlink" title="步骤概览"></a>步骤概览</h1><ol>
+<li>检查目标区域是否支持创建虚拟机。</li>
+<li>创建支持 IPv4 和 IPv6 的<code>虚拟网络</code>。</li>
+<li>创建虚拟机，并将其绑定到之前创建的虚拟网络。</li>
+<li>为虚拟机所创建的网络接口启用 IPv6 支持。</li>
+<li>分配公共 IPv4 和 IPv6 地址。</li>
+</ol>
+<h1 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h1><h2 id="检查区域是否支持创建虚拟机"><a href="#检查区域是否支持创建虚拟机" class="headerlink" title="检查区域是否支持创建虚拟机"></a>检查区域是否支持创建虚拟机</h2><ol>
+<li>进入 <a target="_blank" rel="noopener" href="https://portal.azure.com/#create/Microsoft.VirtualMachine-ARM">Azure 虚拟机创建页面</a>。</li>
+<li>首先选择操作系统。选择操作系统后，系统会显示更多可用数据中心。</li>
+<li>查看是否有你偏好的区域。建议选择 <code>Southeast Asia</code>（新加坡）或 <code>Japan East</code>（日本东京，埼玉县）。<br>不推荐 <code>East Asia</code>（香港），因为该区域的网络会绕行新加坡。<code>Japan East</code> 的部分 IP 地址也会先绕行新加坡。</li>
+<li>配置可以选择 <code>B2ats_v2</code>。</li>
+<li>点击<code>查看 + 创建</code>，确认所选区域支持你选择的配置。</li>
+<li>如果支持创建，暂时不要创建虚拟机，先创建支持 IPv4 和 IPv6 的虚拟网络。否则，请重新选择区域或更改配置。</li>
+</ol>
+<h2 id="创建支持-IPv4-和-IPv6-的虚拟网络"><a href="#创建支持-IPv4-和-IPv6-的虚拟网络" class="headerlink" title="创建支持 IPv4 和 IPv6 的虚拟网络"></a>创建支持 IPv4 和 IPv6 的虚拟网络</h2><ol>
+<li>进入<a target="_blank" rel="noopener" href="https://portal.azure.com/#create/Microsoft.VirtualNetwork">虚拟网络创建页面</a>。</li>
+<li>在 <code>IP 地址</code> 选项卡中，添加 IPv6 地址空间。<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/image/post_illustrations/azure-VM-creation-guide/Screenshot2025-02-16144807.png" alt="添加 IPv6 地址空间"></li>
+<li>创建虚拟网络。</li>
+<li>进入创建好的虚拟网络的配置界面，选择“设置”-&gt;“子网”，编辑子网 “default”，勾选<code>包括 IPv6 地址空间</code>。<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/image/post_illustrations/azure-VM-creation-guide/Screenshot2025-02-16145458.png" alt="勾选包括 IPv6 地址空间"></li>
+</ol>
+<h2 id="创建虚拟机"><a href="#创建虚拟机" class="headerlink" title="创建虚拟机"></a>创建虚拟机</h2><h3 id="基本设置"><a href="#基本设置" class="headerlink" title="基本设置"></a>基本设置</h3><ol>
+<li>首先选择订阅、资源组和操作系统。如果选择 Windows 操作系统，建议选择带有 <code>[smalldisk]</code> 前缀的系统。</li>
+<li>如果要创建纯动态 IPv4 虚拟机，需要将<code>可用性选项</code>调整为<code>无需基础结构冗余</code>。</li>
+<li><strong>在“大小”选项中，可以选择 <code>B1s</code>、<code>B2pts v2</code> 和 <code>B2ats v2</code> 这三个选项，其他选项均不免费。</strong> <code>B2</code> 系列的性能比 <code>B1s</code> 略高，其中 <code>B2pts v2</code> 为 ARM 架构。这里推荐选择 <code>B2ats v2</code>。</li>
+<li>身份验证有两种方式：密钥文件和用户名密码。推荐选择 SSH 公钥。</li>
+</ol>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/image/post_illustrations/azure-VM-creation-guide/Screenshot2025-02-16150537.png" alt="创建虚拟机-基本"></p>
+<h3 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a>磁盘</h3><p>将 <code>OS 磁盘大小</code> 更改为 <code>64GB(P6)</code>，其他选项保持默认。</p>
+<h3 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h3><p>将 <code>虚拟网络</code> 更改为刚刚创建的虚拟网络。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/image/post_illustrations/azure-VM-creation-guide/Screenshot2025-02-16151409.png" alt="创建虚拟机-网络"></p>
+<p>如果要创建纯动态 IPv4 虚拟机，新建<code>公共 IP</code> 时选择“动态 IPv4”，但这样将无法绑定 IPv6 地址。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/image/post_illustrations/azure-VM-creation-guide/Screenshot2025-02-16151142.png" alt="创建虚拟机-网络-动态 IPV4"></p>
+<h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><p>点击 <code>查看 + 创建</code>，核对各项配置是否正确。确认无误后点击“创建”。此时会开始部署虚拟机，并下载 SSH 密钥文件。等待一段时间后，会提示虚拟机部署完成。点击“转到资源”打开虚拟机资源页面。</p>
+<h2 id="调整网络接口配置"><a href="#调整网络接口配置" class="headerlink" title="调整网络接口配置"></a>调整网络接口配置</h2><p>在“设置”-&gt;“IP 配置”中，添加 IPv6 配置。</p>
+<p>可以顺带添加公共 IPv6 地址。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/image/post_illustrations/azure-VM-creation-guide/Screenshot2025-02-16152003.png" alt="调整网络接口配置"></p>
+<h1 id="调整虚拟机配置"><a href="#调整虚拟机配置" class="headerlink" title="调整虚拟机配置"></a>调整虚拟机配置</h1><p>连接虚拟机的方法可以参考网络上的相关文章。</p>
+<ol>
+<li>默认内存只有 1GB，可以增大虚拟内存。<br>对于 Linux 虚拟机来说问题不大，但 Windows 后台程序可能会经常崩溃。</li>
+<li>对于 Windows 虚拟机，还需要在磁盘管理中将未分配的硬盘空间分配给 C 盘。</li>
+</ol>
+
+<div class="article-footer fs14">
+    <section id="references">
+      <div class="header"><span>参考资料</span></div>
+      <div class="body">
+        <ul>
+        <li class="post-title">
+          <p><a target="_blank" rel="noopener" href="https://www.jiecs.top/archives/90ab79b3/">使用负载均衡器开启动态 IPV4 和动态 IPv6 支持</a></p>
+
+        </li>
+        </ul>
+      </div>
+    </section>
+    
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    </div>
 </article>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2025/02/16/modem-password-cracking/">光猫超级管理员密码获取</a></div></section></div>
+
+<div class="related-wrap" id="related-posts">
+    <section class='header'>
+      <div class='title cap theme'>您可能感兴趣的文章</div>
+    </section>
+    <section class='body'>
+    <div class="related-posts"><a class="item" href="\2024\11\27\bypass-campus-network\" title="绕过校园网认证"><span class="title">绕过校园网认证</span><span class="excerpt">本文仅供研究和测试，请勿将其用于任何收费或违法活动，后果自负。</span></a></div></section></div>
 
 
 
@@ -88,7 +184,14 @@
 <footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">LFWQSP2641</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.29.1">Stellar 1.29.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
 </div></footer>
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
-</aside><div class='float-panel blur'>
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E6%8F%90%E6%9D%A1%E4%BB%B6"><span class="toc-text">前提条件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">注意事项</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4%E6%A6%82%E8%A7%88"><span class="toc-text">步骤概览</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E6%AD%A5%E9%AA%A4"><span class="toc-text">操作步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E5%8C%BA%E5%9F%9F%E6%98%AF%E5%90%A6%E6%94%AF%E6%8C%81%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="toc-text">检查区域是否支持创建虚拟机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%94%AF%E6%8C%81-IPv4-%E5%92%8C-IPv6-%E7%9A%84%E8%99%9A%E6%8B%9F%E7%BD%91%E7%BB%9C"><span class="toc-text">创建支持 IPv4 和 IPv6 的虚拟网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="toc-text">创建虚拟机</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E8%AE%BE%E7%BD%AE"><span class="toc-text">基本设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A3%81%E7%9B%98"><span class="toc-text">磁盘</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C"><span class="toc-text">网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA"><span class="toc-text">创建</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%83%E6%95%B4%E7%BD%91%E7%BB%9C%E6%8E%A5%E5%8F%A3%E9%85%8D%E7%BD%AE"><span class="toc-text">调整网络接口配置</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%B0%83%E6%95%B4%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%85%8D%E7%BD%AE"><span class="toc-text">调整虚拟机配置</span></a></li></ol></div><div class="widget-footer">
+
+<a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12c0-4.714 0-7.071 1.464-8.536C4.93 2 7.286 2 12 2c4.714 0 7.071 0 8.535 1.464C22 4.93 22 7.286 22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12Z"/><path stroke-linecap="round" stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/></g></svg><span>回到顶部</span></a></div></widget>
+</div></aside><div class='float-panel blur'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
   </button>
