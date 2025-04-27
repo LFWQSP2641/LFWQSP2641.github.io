@@ -2,9 +2,36 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://lfwqsp2641.me/singbox-windows-client-config.html</loc>
+    
+    <lastmod>2025-04-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://lfwqsp2641.me/singbox-android-client-config.html</loc>
+    
+    <lastmod>2025-04-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://lfwqsp2641.me/ventoy-gpt-ubuntu-24-guide.html</loc>
+    
+    <lastmod>2025-04-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://lfwqsp2641.me/bypass-campus-network.html</loc>
     
-    <lastmod>2025-03-30</lastmod>
+    <lastmod>2025-04-27</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -23,24 +50,6 @@
     <loc>https://lfwqsp2641.me/data/file/free-trojan/cf_ipv4.json</loc>
     
     <lastmod>2025-03-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://lfwqsp2641.me/singbox-android-client-config.html</loc>
-    
-    <lastmod>2025-03-16</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://lfwqsp2641.me/singbox-windows-client-config.html</loc>
-    
-    <lastmod>2025-03-16</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -68,15 +77,6 @@
     <loc>https://lfwqsp2641.me/xray-server-config.html</loc>
     
     <lastmod>2025-03-13</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://lfwqsp2641.me/ventoy-gpt-ubuntu-24-guide.html</loc>
-    
-    <lastmod>2025-03-12</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -166,7 +166,7 @@
 
   <url>
     <loc>https://lfwqsp2641.me/</loc>
-    <lastmod>2025-03-30</lastmod>
+    <lastmod>2025-04-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
