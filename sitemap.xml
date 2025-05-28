@@ -2,18 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://lfwqsp2641.me/singbox-windows-client-config.html</loc>
+    <loc>https://lfwqsp2641.me/xray-client-config.html</loc>
     
-    <lastmod>2025-04-27</lastmod>
+    <lastmod>2025-05-28</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://lfwqsp2641.me/singbox-android-client-config.html</loc>
+    <loc>https://lfwqsp2641.me/about/</loc>
     
-    <lastmod>2025-04-27</lastmod>
+    <lastmod>2025-05-28</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -50,33 +50,6 @@
     <loc>https://lfwqsp2641.me/data/file/free-trojan/cf_ipv4.json</loc>
     
     <lastmod>2025-03-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://lfwqsp2641.me/xray-client-config.html</loc>
-    
-    <lastmod>2025-03-13</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://lfwqsp2641.me/singbox-server-config.html</loc>
-    
-    <lastmod>2025-03-13</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://lfwqsp2641.me/xray-server-config.html</loc>
-    
-    <lastmod>2025-03-13</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -128,24 +101,6 @@
   </url>
   
   <url>
-    <loc>https://lfwqsp2641.me/qt-hot-update.html</loc>
-    
-    <lastmod>2025-03-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://lfwqsp2641.me/about/</loc>
-    
-    <lastmod>2025-02-21</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://lfwqsp2641.me/free-trojan.html</loc>
     
     <lastmod>2025-02-21</lastmod>
@@ -166,7 +121,7 @@
 
   <url>
     <loc>https://lfwqsp2641.me/</loc>
-    <lastmod>2025-04-27</lastmod>
+    <lastmod>2025-05-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
