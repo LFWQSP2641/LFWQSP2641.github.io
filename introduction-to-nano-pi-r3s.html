@@ -28,7 +28,7 @@
 <meta property="og:description" content="近几天购置了一台 NanoPi R3S 作为主路由使用，本文将记录从零开始配置的过程。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-05-31T05:19:44.000Z">
-<meta property="article:modified_time" content="2025-05-31T07:22:41.871Z">
+<meta property="article:modified_time" content="2025-06-10T13:01:29.936Z">
 <meta property="article:author" content="LFWQSP2641">
 <meta property="article:tag" content="校园网">
 <meta property="article:tag" content="IPv6">
@@ -79,7 +79,7 @@
 <div class="widgets">
 
 
-<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/openwrt-sing-box-tun.html"><span class="title">在 NanoPi R3S 上配置 sing-box 的 TUN 模式</span></a><a class="item title" href="/introduction-to-nano-pi-r3s.html"><span class="title">从零开始 NanoPi R3S</span></a><a class="item title" href="/xray-client-config.html"><span class="title">Xray-core 客户端配置</span></a><a class="item title" href="/ventoy-gpt-ubuntu-24-guide.html"><span class="title">使用Ventoy创建GPT格式的可启动Ubuntu 24 U盘</span></a><a class="item title" href="/bypass-campus-network.html"><span class="title">绕过校园网认证</span></a><a class="item title" href="/purpur-technical-server-guide.html"><span class="title">Purpur 生电服务器搭建指南</span></a><a class="item title" href="/mumu-macro-keys-arknights-0-frame-deployment.html"><span class="title">MuMu宏按键《明日方舟》0帧部署</span></a><a class="item title" href="/modem-password-cracking.html"><span class="title">光猫超级管理员密码获取</span></a><a class="item title" href="/iptables-ipset-country-filtering-for-ports-ubuntu-24.html"><span class="title">Ubuntu 24 配置限制端口访问国家</span></a><a class="item title" href="/azure-VM-creation-guide.html"><span class="title">使用 Azure 学生订阅创建免费支持 IPv4 和 IPv6 的 Azure 虚拟机</span></a></div></widget>
+<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/introduction-to-nano-pi-r3s.html"><span class="title">从零开始 NanoPi R3S</span></a><a class="item title" href="/openwrt-sing-box-tun.html"><span class="title">在 NanoPi R3S 上配置 sing-box 的 TUN 模式</span></a><a class="item title" href="/xray-client-config.html"><span class="title">Xray-core 客户端配置</span></a><a class="item title" href="/ventoy-gpt-ubuntu-24-guide.html"><span class="title">使用Ventoy创建GPT格式的可启动Ubuntu 24 U盘</span></a><a class="item title" href="/bypass-campus-network.html"><span class="title">绕过校园网认证</span></a><a class="item title" href="/purpur-technical-server-guide.html"><span class="title">Purpur 生电服务器搭建指南</span></a><a class="item title" href="/mumu-macro-keys-arknights-0-frame-deployment.html"><span class="title">MuMu宏按键《明日方舟》0帧部署</span></a><a class="item title" href="/modem-password-cracking.html"><span class="title">光猫超级管理员密码获取</span></a><a class="item title" href="/iptables-ipset-country-filtering-for-ports-ubuntu-24.html"><span class="title">Ubuntu 24 配置限制端口访问国家</span></a><a class="item title" href="/azure-VM-creation-guide.html"><span class="title">使用 Azure 学生订阅创建免费支持 IPv4 和 IPv6 的 Azure 虚拟机</span></a></div></widget>
 </div>
 
 </div></aside><div class="l_main" id="main">
@@ -92,7 +92,7 @@
   <div class="content">
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
 <span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div>
-<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2025-05-31T05:19:44.000Z">2025-05-31</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2025-05-31T07:22:41.871Z">2025-05-31</time></span></div></div></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2025-05-31T05:19:44.000Z">2025-05-31</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2025-06-10T13:01:29.936Z">2025-06-10</time></span></div></div></div>
     
     <div class="bottom only-title">
       
@@ -120,7 +120,9 @@
 <p>参考 <a target="_blank" rel="noopener" href="https://wiki.friendlyelec.com/wiki/index.php/NanoPi_R3S/zh#.E6.96.B9.E6.B3.951:_.E7.94.A8TF.E5.90.AF.E5.8A.A8.E5.8D.A1.E8.BF.9B.E8.A1.8C.E8.87.AA.E5.8A.A8.E7.83.A7.E5.86.99">iStoreOS 官方文档</a>。</p>
 <p>启动后进入 FriendlyWrt 的 Web 界面，点击上方菜单的<code>系统</code> - <code>eMMC刷机助手</code>，然后选择 iStoreOS 的固件文件，点击<code>开始刷机</code>。</p>
 <p>刷机完成后，SYS灯 (红灯) 慢闪，LAN灯 (绿灯) 常亮，WAN灯 (绿灯) 常亮，表示刷机成功，需弹出 TF 卡或拔插电源以重启。</p>
-<h2 id="配置-USB-WiFi-网卡"><a href="#配置-USB-WiFi-网卡" class="headerlink" title="配置 USB WiFi 网卡"></a>配置 USB WiFi 网卡</h2><p>参考 <a target="_blank" rel="noopener" href="https://www.draisberghof.de/usb_modeswitch/bb/viewtopic.php?t=3055">another device with 0bda:1a2b not switching to c811</a>，需要添加内核启动参数：<code>usb-storage.quirks=0bda:1a2b:i</code>。</p>
+<h2 id="配置-USB-WiFi-网卡"><a href="#配置-USB-WiFi-网卡" class="headerlink" title="配置 USB WiFi 网卡"></a>配置 USB WiFi 网卡</h2><p>经测试，friendlywrt 似乎对 COMFAST CF-811AC V3 的支持较差，无法正常工作，显示无线未关联。将 <code>etc/modules.d/11-rtl8821cu</code> 文件中的 <code>rtl8821cu</code> 修改为 <code>rtw_8821cu</code> 后，虽然日志和界面都显示正常，但是无法搜索到其无线信号。</p>
+<p>所以这边使用 iStoreOS 系统来配置 USB WiFi 网卡。</p>
+<p>参考 <a target="_blank" rel="noopener" href="https://www.draisberghof.de/usb_modeswitch/bb/viewtopic.php?t=3055">another device with 0bda:1a2b not switching to c811</a>，需要添加内核启动参数：<code>usb-storage.quirks=0bda:1a2b:i</code>。</p>
 <p>将新的 <code>boot.scr</code> 文件替换掉原 <code>/boot/boot.scr</code> 文件，可参考我的 github 仓库：<a target="_blank" rel="noopener" href="https://github.com/LFWQSP2641/istoreos-boot.scr">istoreos-boot.scr</a>。</p>
 <p>重启后，USB WiFi 网卡应该就可以正常工作了。</p>
 <h2 id="修复江安西舍的-IPV6-问题"><a href="#修复江安西舍的-IPV6-问题" class="headerlink" title="修复江安西舍的 IPV6 问题"></a>修复江安西舍的 IPV6 问题</h2><h3 id="NAT66-配置"><a href="#NAT66-配置" class="headerlink" title="NAT66 配置"></a>NAT66 配置</h3><p>四川大学江安校区的锐捷校园网下发 64 位前缀 IPv6，所以可以配置 NAT66 或 IPV6 relay</p>
