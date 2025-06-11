@@ -28,7 +28,7 @@
 <meta property="og:description" content="近几天购置了一台 NanoPi R3S 作为主路由使用，本文将记录从零开始配置的过程。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-05-31T05:19:44.000Z">
-<meta property="article:modified_time" content="2025-06-10T13:01:29.936Z">
+<meta property="article:modified_time" content="2025-06-11T14:43:02.056Z">
 <meta property="article:author" content="LFWQSP2641">
 <meta property="article:tag" content="校园网">
 <meta property="article:tag" content="IPv6">
@@ -80,7 +80,7 @@
 <div class="widgets">
 
 
-<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/introduction-to-nano-pi-r3s.html"><span class="title">从零开始 NanoPi R3S</span></a><a class="item title" href="/openwrt-sing-box-tun.html"><span class="title">在 NanoPi R3S 上配置 sing-box 的 TUN 模式</span></a><a class="item title" href="/xray-client-config.html"><span class="title">Xray-core 客户端配置</span></a><a class="item title" href="/ventoy-gpt-ubuntu-24-guide.html"><span class="title">使用Ventoy创建GPT格式的可启动Ubuntu 24 U盘</span></a><a class="item title" href="/bypass-campus-network.html"><span class="title">绕过校园网认证</span></a><a class="item title" href="/purpur-technical-server-guide.html"><span class="title">Purpur 生电服务器搭建指南</span></a><a class="item title" href="/mumu-macro-keys-arknights-0-frame-deployment.html"><span class="title">MuMu宏按键《明日方舟》0帧部署</span></a><a class="item title" href="/modem-password-cracking.html"><span class="title">光猫超级管理员密码获取</span></a><a class="item title" href="/iptables-ipset-country-filtering-for-ports-ubuntu-24.html"><span class="title">Ubuntu 24 配置限制端口访问国家</span></a><a class="item title" href="/azure-VM-creation-guide.html"><span class="title">使用 Azure 学生订阅创建免费支持 IPv4 和 IPv6 的 Azure 虚拟机</span></a></div></widget>
+<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/openwrt-sing-box-tun.html"><span class="title">在 NanoPi R3S 上配置 sing-box 的 TUN 模式</span></a><a class="item title" href="/introduction-to-nano-pi-r3s.html"><span class="title">从零开始 NanoPi R3S</span></a><a class="item title" href="/xray-client-config.html"><span class="title">Xray-core 客户端配置</span></a><a class="item title" href="/ventoy-gpt-ubuntu-24-guide.html"><span class="title">使用Ventoy创建GPT格式的可启动Ubuntu 24 U盘</span></a><a class="item title" href="/bypass-campus-network.html"><span class="title">绕过校园网认证</span></a><a class="item title" href="/purpur-technical-server-guide.html"><span class="title">Purpur 生电服务器搭建指南</span></a><a class="item title" href="/mumu-macro-keys-arknights-0-frame-deployment.html"><span class="title">MuMu宏按键《明日方舟》0帧部署</span></a><a class="item title" href="/modem-password-cracking.html"><span class="title">光猫超级管理员密码获取</span></a><a class="item title" href="/iptables-ipset-country-filtering-for-ports-ubuntu-24.html"><span class="title">Ubuntu 24 配置限制端口访问国家</span></a><a class="item title" href="/azure-VM-creation-guide.html"><span class="title">使用 Azure 学生订阅创建免费支持 IPv4 和 IPv6 的 Azure 虚拟机</span></a></div></widget>
 </div>
 
 </div></aside><div class="l_main" id="main">
@@ -93,7 +93,7 @@
   <div class="content">
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
 <span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div>
-<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2025-05-31T05:19:44.000Z">2025-05-31</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2025-06-10T13:01:29.936Z">2025-06-10</time></span></div></div></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2025-05-31T05:19:44.000Z">2025-05-31</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2025-06-11T14:43:02.056Z">2025-06-11</time></span></div></div></div>
     
     <div class="bottom only-title">
       
@@ -114,7 +114,7 @@
 <li>电源适配器（建议原装的5V 3A，但是实测5V 2.1A的充电宝也能带动）</li>
 <li>TF 卡（用来刷入 iStoreOS 系统，如使用线刷则不需要）</li>
 </ul>
-<h2 id="刷机"><a href="#刷机" class="headerlink" title="刷机"></a>刷机</h2><p>因为上面提到的 USB WiFi 网卡支持较好的系统版本较少，所以示例这边刷入 iStoreOS 系统。</p>
+<h2 id="刷机"><a href="#刷机" class="headerlink" title="刷机"></a>刷机</h2><p>因为上面提到的 USB WiFi 网卡支持较好的系统版本较少，所以示例这边刷入 iStoreOS 系统，目前找到的问题是 WAN 网口只闪绿灯，LAN 网口只闪红灯，不影响正常使用。</p>
 <p>R3S iStoreOS 固件：<a target="_blank" rel="noopener" href="https://fw.koolcenter.com/iStoreOS/r3s/">下载地址</a></p>
 <p>可以先检查初始系统 FriendlyWrt 页面是否有<code>eMMC刷机助手</code>功能，如果有则可以直接使用该功能刷入 iStoreOS 系统。</p>
 <p>如果没有该功能，则需要先刷入最新版 FriendlyWrt 系统，然后再使用该功能刷入 iStoreOS。</p>
