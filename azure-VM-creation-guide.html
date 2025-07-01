@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.32.1" theme-name="Stellar" theme-version="1.32.1">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.32.3" theme-name="Stellar" theme-version="1.32.3">
   <link rel="canonical" href="https://lfwqsp2641.me/azure-VM-creation-guide.html">
   
   <meta name="generator" content="Hexo 7.3.0">
@@ -44,7 +44,7 @@
   <!-- feed -->
   
 
-  <link rel="stylesheet" href="/css/main.css?v=1.32.1">
+  <link rel="stylesheet" href="/css/main.css?v=1.32.3">
 
 
   
@@ -61,7 +61,7 @@
 <div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
 
 
-<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/image/79988645_p0.jpg" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">LFWQSP2641's Blogs</div></a></div></header>
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/image/79988645_p0.jpg" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">LFWQSP2641's Blogs</div></a></div></header>
 
 <div class="nav-area">
 
@@ -72,7 +72,7 @@
 
 
 
-<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/bypass-campus-network.html"><span class="title">绕过校园网认证</span></a><a class="item title" href="/openwrt-sing-box-tun.html"><span class="title">在 NanoPi R3S 上配置 sing-box 的 TUN 模式</span></a><a class="item title" href="/introduction-to-nano-pi-r3s.html"><span class="title">从零开始 NanoPi R3S</span></a><a class="item title" href="/xray-client-config.html"><span class="title">Xray-core 客户端配置</span></a><a class="item title" href="/ventoy-gpt-ubuntu-24-guide.html"><span class="title">使用Ventoy创建GPT格式的可启动Ubuntu 24 U盘</span></a><a class="item title" href="/purpur-technical-server-guide.html"><span class="title">Purpur 生电服务器搭建指南</span></a><a class="item title" href="/mumu-macro-keys-arknights-0-frame-deployment.html"><span class="title">MuMu宏按键《明日方舟》0帧部署</span></a><a class="item title" href="/modem-password-cracking.html"><span class="title">光猫超级管理员密码获取</span></a><a class="item title" href="/iptables-ipset-country-filtering-for-ports-ubuntu-24.html"><span class="title">Ubuntu 24 配置限制端口访问国家</span></a><a class="item title" href="/azure-VM-creation-guide.html"><span class="title">使用 Azure 学生订阅创建免费支持 IPv4 和 IPv6 的 Azure 虚拟机</span></a></div></widget>
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/bypass-campus-network.html"><span class="title">绕过校园网认证</span></a><a class="item title" href="/openwrt-sing-box-tun.html"><span class="title">在 NanoPi R3S 上配置 sing-box 的 TUN 模式</span></a><a class="item title" href="/introduction-to-nano-pi-r3s.html"><span class="title">从零开始 NanoPi R3S</span></a><a class="item title" href="/xray-client-config.html"><span class="title">Xray-core 客户端配置</span></a><a class="item title" href="/ventoy-gpt-ubuntu-24-guide.html"><span class="title">使用Ventoy创建GPT格式的可启动Ubuntu 24 U盘</span></a><a class="item title" href="/purpur-technical-server-guide.html"><span class="title">Purpur 生电服务器搭建指南</span></a><a class="item title" href="/mumu-macro-keys-arknights-0-frame-deployment.html"><span class="title">MuMu宏按键《明日方舟》0帧部署</span></a><a class="item title" href="/modem-password-cracking.html"><span class="title">光猫超级管理员密码获取</span></a><a class="item title" href="/iptables-ipset-country-filtering-for-ports-ubuntu-24.html"><span class="title">Ubuntu 24 配置限制端口访问国家</span></a><a class="item title" href="/azure-VM-creation-guide.html"><span class="title">使用 Azure 学生订阅创建免费支持 IPv4 和 IPv6 的 Azure 虚拟机</span></a></div></widget>
 </div>
 
 </div></aside><div class="l_main" id="main">
@@ -120,9 +120,9 @@
 </ol>
 <h3 id="创建支持-IPv4-和-IPv6-的虚拟网络"><a href="#创建支持-IPv4-和-IPv6-的虚拟网络" class="headerlink" title="创建支持 IPv4 和 IPv6 的虚拟网络"></a>创建支持 IPv4 和 IPv6 的虚拟网络</h3><ol>
 <li>进入<a target="_blank" rel="noopener" href="https://portal.azure.com/#create/Microsoft.VirtualNetwork">虚拟网络创建页面</a>。</li>
-<li>在 <code>IP 地址</code> 选项卡中，添加 IPv6 地址空间。<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/image/post_illustrations/azure-VM-creation-guide/Screenshot2025-02-16144807.png" alt="添加 IPv6 地址空间"/></div><div class="image-meta"><span class="image-caption center">添加 IPv6 地址空间</span></div></div></li>
+<li>在 <code>IP 地址</code> 选项卡中，添加 IPv6 地址空间。<div class="tag-plugin image"><div class="image-bg"><img src="/image/post_illustrations/azure-VM-creation-guide/Screenshot2025-02-16144807.png" alt="添加 IPv6 地址空间"/></div><div class="image-meta"><span class="image-caption center">添加 IPv6 地址空间</span></div></div></li>
 <li>创建虚拟网络。</li>
-<li>进入创建好的虚拟网络的配置界面，选择“设置”-&gt;“子网”，编辑子网 “default”，勾选<code>包括 IPv6 地址空间</code>。<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/image/post_illustrations/azure-VM-creation-guide/Screenshot2025-02-16145458.png" alt="勾选包括 IPv6 地址空间"/></div><div class="image-meta"><span class="image-caption center">勾选包括 IPv6 地址空间</span></div></div></li>
+<li>进入创建好的虚拟网络的配置界面，选择“设置”-&gt;“子网”，编辑子网 “default”，勾选<code>包括 IPv6 地址空间</code>。<div class="tag-plugin image"><div class="image-bg"><img src="/image/post_illustrations/azure-VM-creation-guide/Screenshot2025-02-16145458.png" alt="勾选包括 IPv6 地址空间"/></div><div class="image-meta"><span class="image-caption center">勾选包括 IPv6 地址空间</span></div></div></li>
 </ol>
 <h3 id="创建虚拟机"><a href="#创建虚拟机" class="headerlink" title="创建虚拟机"></a>创建虚拟机</h3><h4 id="基本设置"><a href="#基本设置" class="headerlink" title="基本设置"></a>基本设置</h4><ol>
 <li>首先选择订阅、资源组和操作系统。如果选择 Windows 操作系统，建议选择带有 <code>[smalldisk]</code> 前缀的系统。</li>
@@ -130,19 +130,19 @@
 <li><strong>在“大小”选项中，可以选择 <code>B1s</code>、<code>B2pts v2</code> 和 <code>B2ats v2</code> 这三个选项，其他选项均不免费。</strong> <code>B2</code> 系列的性能比 <code>B1s</code> 略高，其中 <code>B2pts v2</code> 为 ARM 架构。这里推荐选择 <code>B2ats v2</code>。</li>
 <li>身份验证有两种方式：密钥文件和用户名密码。推荐选择 SSH 公钥。</li>
 </ol>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/image/post_illustrations/azure-VM-creation-guide/Screenshot2025-02-16150537.png" alt="创建虚拟机-基本"/></div><div class="image-meta"><span class="image-caption center">创建虚拟机-基本</span></div></div>
+<div class="tag-plugin image"><div class="image-bg"><img src="/image/post_illustrations/azure-VM-creation-guide/Screenshot2025-02-16150537.png" alt="创建虚拟机-基本"/></div><div class="image-meta"><span class="image-caption center">创建虚拟机-基本</span></div></div>
 
 <h4 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a>磁盘</h4><p>将 <code>OS 磁盘大小</code> 更改为 <code>64GB(P6)</code>，其他选项保持默认。</p>
 <h4 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h4><p>将 <code>虚拟网络</code> 更改为刚刚创建的虚拟网络。</p>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/image/post_illustrations/azure-VM-creation-guide/Screenshot2025-02-16151409.png" alt="创建虚拟机-网络"/></div><div class="image-meta"><span class="image-caption center">创建虚拟机-网络</span></div></div>
+<div class="tag-plugin image"><div class="image-bg"><img src="/image/post_illustrations/azure-VM-creation-guide/Screenshot2025-02-16151409.png" alt="创建虚拟机-网络"/></div><div class="image-meta"><span class="image-caption center">创建虚拟机-网络</span></div></div>
 
 <p>如果要创建纯动态 IPv4 虚拟机，新建<code>公共 IP</code> 时选择“动态 IPv4”，但这样将无法绑定 IPv6 地址。</p>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/image/post_illustrations/azure-VM-creation-guide/Screenshot2025-02-16151142.png" alt="创建虚拟机-网络-动态 IPV4"/></div><div class="image-meta"><span class="image-caption center">创建虚拟机-网络-动态 IPV4</span></div></div>
+<div class="tag-plugin image"><div class="image-bg"><img src="/image/post_illustrations/azure-VM-creation-guide/Screenshot2025-02-16151142.png" alt="创建虚拟机-网络-动态 IPV4"/></div><div class="image-meta"><span class="image-caption center">创建虚拟机-网络-动态 IPV4</span></div></div>
 
 <h4 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h4><p>点击 <code>查看 + 创建</code>，核对各项配置是否正确。确认无误后点击“创建”。此时会开始部署虚拟机，并下载 SSH 密钥文件。等待一段时间后，会提示虚拟机部署完成。点击“转到资源”打开虚拟机资源页面。</p>
 <h3 id="调整网络接口配置"><a href="#调整网络接口配置" class="headerlink" title="调整网络接口配置"></a>调整网络接口配置</h3><p>在“设置”-&gt;“IP 配置”中，添加 IPv6 配置。</p>
 <p>可以顺带添加公共 IPv6 地址。</p>
-<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/image/post_illustrations/azure-VM-creation-guide/Screenshot2025-02-16152003.png" alt="调整网络接口配置"/></div><div class="image-meta"><span class="image-caption center">调整网络接口配置</span></div></div>
+<div class="tag-plugin image"><div class="image-bg"><img src="/image/post_illustrations/azure-VM-creation-guide/Screenshot2025-02-16152003.png" alt="调整网络接口配置"/></div><div class="image-meta"><span class="image-caption center">调整网络接口配置</span></div></div>
 
 <h2 id="调整虚拟机配置"><a href="#调整虚拟机配置" class="headerlink" title="调整虚拟机配置"></a>调整虚拟机配置</h2><p>连接虚拟机的方法可以参考网络上的相关文章。</p>
 <ol>
@@ -182,7 +182,7 @@
 
 
 
-<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">LFWQSP2641</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.32.1">Stellar 1.32.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">LFWQSP2641</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.32.3">Stellar 1.32.3</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
 </div></footer>
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
@@ -230,16 +230,19 @@
   const def = {
     avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
     cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
   };
   const deps = {
     jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
-    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
   }
   
 
 </script>
 
 <script type="text/javascript">
+  
   function RunItem() {
     this.list = []; // 存放回调函数
     this.start = () => {
@@ -510,9 +513,76 @@
   })()
 </script>
 
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy, .lazyload",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
 
 <!-- required -->
-<script src="/js/main.js?v=1.32.1" defer></script>
+<script src="/js/main.js?v=1.32.3" defer></script>
 
 <script type="text/javascript">
   const applyTheme = (theme) => {
@@ -723,40 +793,24 @@
     hoverDelay: 25
   };
 </script>
-<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script defer src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
-<script>
-  // https://www.npmjs.com/package/vanilla-lazyload
-  // Set the options globally
-  // to make LazyLoad self-initialize
-  window.lazyLoadOptions = {
-    elements_selector: ".lazy",
-  };
-  // Listen to the initialization event
-  // and get the instance of LazyLoad
-  window.addEventListener(
-    "LazyLoad::Initialized",
-    function (event) {
-      window.lazyLoadInstance = event.detail.instance;
-    },
-    false
-  );
-  document.addEventListener('DOMContentLoaded', function () {
-    window.lazyLoadInstance?.update();
-  });
-</script><script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
   ctx.fancybox = {
     selector: `.timenode p>img`,
     css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
     js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
   };
-  var selector = '[data-fancybox]:not(.error)';
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
   if (ctx.fancybox.selector) {
     selector += `, ${ctx.fancybox.selector}`
   }
   var needFancybox = document.querySelectorAll(selector).length !== 0;
   if (!needFancybox) {
-    const els = document.getElementsByClassName('ds-memos');
-    if (els != undefined && els.length > 0) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
       needFancybox = true;
     }
   }
