@@ -2,6 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://lfwqsp2641.github.io/xray-client-config.html</loc>
+    
+    <lastmod>2025-10-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://lfwqsp2641.github.io/openwrt-sing-box-tun.html</loc>
+    
+    <lastmod>2025-10-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://lfwqsp2641.github.io/ventoy-gpt-ubuntu-24-guide.html</loc>
+    
+    <lastmod>2025-10-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://lfwqsp2641.github.io/introduction-to-nano-pi-r3s.html</loc>
+    
+    <lastmod>2025-10-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://lfwqsp2641.github.io/bypass-campus-network.html</loc>
     
     <lastmod>2025-06-16</lastmod>
@@ -11,45 +47,9 @@
   </url>
   
   <url>
-    <loc>https://lfwqsp2641.github.io/openwrt-sing-box-tun.html</loc>
-    
-    <lastmod>2025-06-11</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://lfwqsp2641.github.io/introduction-to-nano-pi-r3s.html</loc>
-    
-    <lastmod>2025-06-11</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://lfwqsp2641.github.io/xray-client-config.html</loc>
-    
-    <lastmod>2025-05-28</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://lfwqsp2641.github.io/about/</loc>
     
     <lastmod>2025-05-28</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://lfwqsp2641.github.io/ventoy-gpt-ubuntu-24-guide.html</loc>
-    
-    <lastmod>2025-04-27</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
