@@ -4,8 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
-  <link rel="canonical" href="https://blog.lfwqsp2641.cfd/tags/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%AB%AF/">
-  <meta name="robots" content="noindex,follow">
+  <link rel="canonical" href="https://blog.lfwqsp2641.cfd/post/fix-scunet-ipv6/">
+  
   <meta name="generator" content="Hexo 7.3.0">
   <meta http-equiv='x-dns-prefetch-control' content='on' />
   
@@ -17,22 +17,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
   <meta name="theme-color" content="#f9fafb">
-  <title>标签：服务端端 - LFWQSP2641's Blogs</title>
+  <title>尝试修复四川大学华西校区 IPv6 网络问题 - LFWQSP2641's Blogs</title>
 
   
-    <meta property="og:type" content="website">
-<meta property="og:title" content="LFWQSP2641&#39;s Blogs">
-<meta property="og:url" content="https://blog.lfwqsp2641.cfd/tags/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%AB%AF/">
+    <meta name="description" content="最近刚搬入四川大学华西校区，发现校园网 IPv6 连通性每隔约一小时就会中断。本文记录了排查及修复该问题的过程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="尝试修复四川大学华西校区 IPv6 网络问题">
+<meta property="og:url" content="https://blog.lfwqsp2641.cfd/post/fix-scunet-ipv6/">
 <meta property="og:site_name" content="LFWQSP2641&#39;s Blogs">
+<meta property="og:description" content="最近刚搬入四川大学华西校区，发现校园网 IPv6 连通性每隔约一小时就会中断。本文记录了排查及修复该问题的过程。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://blog.lfwqsp2641.cfd/image/79988645_p0.jpg">
+<meta property="article:published_time" content="2026-03-05T07:04:45.000Z">
+<meta property="article:modified_time" content="2026-03-05T07:43:21.614Z">
 <meta property="article:author" content="LFWQSP2641">
+<meta property="article:tag" content="IPv6">
+<meta property="article:tag" content="校园网">
+<meta property="article:tag" content="iStoreOS">
+<meta property="article:tag" content="OpenWrt">
+<meta property="article:tag" content="路由器">
+<meta property="article:tag" content="配置">
+<meta property="article:tag" content="锐捷">
+<meta property="article:tag" content="网络配置">
+<meta property="article:tag" content="四川大学">
+<meta property="article:tag" content="华西校区">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://blog.lfwqsp2641.cfd/image/79988645_p0.jpg">
   
   
   
-  
+  <meta name="keywords" content="IPv6,校园网,iStoreOS,OpenWrt,路由器,配置,锐捷,网络配置,四川大学,华西校区">
 
   <!-- feed -->
   
@@ -46,12 +60,12 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Website","@id":"https://blog.lfwqsp2641.cfd","author":{"@type":"Person","name":"LFWQSP2641","sameAs":[],"image":"/image/79988645_p0.jpg"},"name":"LFWQSP2641's Blogs","description":"","url":"https://blog.lfwqsp2641.cfd"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"LFWQSP2641","sameAs":[],"image":"/image/79988645_p0.jpg"},"dateCreated":"2026-03-05T15:04:45+08:00","dateModified":"2026-03-05T15:43:21+08:00","datePublished":"2026-03-05T15:04:45+08:00","description":"最近刚搬入四川大学华西校区，发现校园网 IPv6 连通性每隔约一小时就会中断。本文记录了排查及修复该问题的过程。","headline":"尝试修复四川大学华西校区 IPv6 网络问题","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.lfwqsp2641.cfd/post/fix-scunet-ipv6/"},"publisher":{"@type":"Organization","name":"LFWQSP2641","sameAs":[],"image":"/image/79988645_p0.jpg","logo":{"@type":"ImageObject","url":"/image/79988645_p0.jpg"}},"url":"https://blog.lfwqsp2641.cfd/post/fix-scunet-ipv6/","keywords":"IPv6, 校园网, iStoreOS, OpenWrt, 路由器, 配置, 锐捷, 网络配置, 四川大学, 华西校区","image":[]}</script>
   
 </head>
 <body>
 
-<div class="l_body index" id="start" layout="undefined" type="undefined" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
 
 
 <header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/image/79988645_p0.jpg" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">LFWQSP2641's Blogs</div></a></div></header>
@@ -63,32 +77,105 @@
 <div class="widgets">
 <div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
 
+
+
 <widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/post/fix-scunet-ipv6/"><span class="title">尝试修复四川大学华西校区 IPv6 网络问题</span></a><a class="item title" href="/post/xray-server-xtls-xhttp/"><span class="title">Xray 服务端搭建 XTLS + XHTTP 教程</span></a><a class="item title" href="/post/xray-client-config/"><span class="title">Xray-core 客户端配置</span></a><a class="item title" href="/post/introduction-to-nano-pi-r3s/"><span class="title">从零开始 NanoPi R3S</span></a><a class="item title" href="/post/openwrt-sing-box-tun/"><span class="title">在 NanoPi R3S 上配置 sing-box 的 TUN 模式</span></a><a class="item title" href="/post/ventoy-gpt-ubuntu-24-guide/"><span class="title">使用Ventoy创建GPT格式的可启动Ubuntu 24 U盘</span></a><a class="item title" href="/post/bypass-campus-network/"><span class="title">绕过校园网认证</span></a><a class="item title" href="/post/purpur-technical-server-guide/"><span class="title">Purpur 生电服务器搭建指南</span></a><a class="item title" href="/post/mumu-macro-keys-arknights-0-frame-deployment/"><span class="title">MuMu宏按键《明日方舟》0帧部署</span></a><a class="item title" href="/post/modem-password-cracking/"><span class="title">光猫超级管理员密码获取</span></a></div></widget>
 </div>
 
 </div></aside><div class="l_main" id="main">
 
-<header class="header mobile-only"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/image/79988645_p0.jpg" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">LFWQSP2641's Blogs</div></a></div></header>
-
- 
 
 
 
 
-<div class="navbar top"><div class="navbar-blur"><div class="navbar-container"><nav class="post"><a href="/">近期发布</a><a class="active" href="/tags/">标签：服务端端</a><a href="/archives/">归档</a></nav></div></div></div>
-<div class="post-list post"><a class="post-card post" href="/post/xray-server-xtls-xhttp/">
-<article class="md-text"><h2 class="post-title">Xray 服务端搭建 XTLS + XHTTP 教程</h2><div class="excerpt"><p>声明：
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2026-03-05T07:04:45.000Z">2026-03-05</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2026-03-05T07:43:21.614Z">2026-03-05</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>尝试修复四川大学华西校区 IPv6 网络问题</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><p>最近刚搬入四川大学华西校区，发现校园网 IPv6 连通性每隔约一小时就会中断。本文记录了排查及修复该问题的过程。</p>
+<span id="more"></span>
 
-仅供研究和测试，请勿将其用于任何收费或违法活动，后果自负。
-仅供自用，不一定适合其他人。
-</p></div><div class="meta cap"><span class="cap" id="post-meta"><svg style="margin-bottom:2px" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M6.94 2c.416 0 .753.324.753.724v1.46c.668-.012 1.417-.012 2.26-.012h4.015c.842 0 1.591 0 2.259.013v-1.46c0-.4.337-.725.753-.725s.753.324.753.724V4.25c1.445.111 2.394.384 3.09 1.055c.698.67.982 1.582 1.097 2.972L22 9H2v-.724c.116-1.39.4-2.302 1.097-2.972c.697-.67 1.645-.944 3.09-1.055V2.724c0-.4.337-.724.753-.724"/><path fill="currentColor" d="M22 14v-2c0-.839-.004-2.335-.017-3H2.01c-.013.665-.01 2.161-.01 3v2c0 3.771 0 5.657 1.172 6.828C4.343 22 6.228 22 10 22h4c3.77 0 5.656 0 6.828-1.172C22 19.658 22 17.772 22 14" opacity=".5"/><path fill="currentColor" d="M18 17a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg><time datetime="2025-12-04T07:33:18.000Z">2025-12-04</time></span></div></article>
-</a></div>
+<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p><strong>设备环境：</strong></p>
+<ul>
+<li><strong>路由器</strong>：NanoPi R3S，运行 iStoreOS 系统</li>
+<li><strong>连接方式</strong>：WAN 口接入校园网，LAN 口连接笔记本电脑，并通过 USB WiFi 网卡作为热点供手机连接</li>
+<li><strong>网络环境</strong>：四川大学华西校区锐捷校园网，提供 IPv6 网络，下发 &#x2F;128 前缀</li>
+<li><strong>网络配置</strong>：LAN 口配置为 NAT66，同时运行 sing-box 提供透明代理，TUN 入站模式配置为 <code>auto_route</code> + <code>auto_redirect</code> + <code>strict_route</code></li>
+</ul>
+<p><strong>问题表现：</strong></p>
+<p>路由器 IPv6 连接每隔一小时左右中断。重启 sing-box 的 TUN 接口后可暂时恢复，但一小时后故障重现，如此循环。</p>
+<h2 id="故障排查"><a href="#故障排查" class="headerlink" title="故障排查"></a>故障排查</h2><p><strong>故障发生时的诊断信息：</strong></p>
+<p>执行 <code>ip -6 addr show dev eth0</code> 显示正常，路由器的 IPv6 地址未变动，且 <code>valid_lft</code> 和 <code>preferred_lft</code> 均在 80000 秒以上，说明地址租期未过期。</p>
+<p>路由表及 IP 地址配置检查无误，但查看 IPv6 邻居表（Neighbor Table）时发现异常：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">~# </span><span class="language-bash">ip -6 neigh show</span></span><br><span class="line">ddcc:5175:7234:0:d029:b1e1:38d8:940f dev br-lan lladdr c4:c6:e6:48:2b:72 REACHABLE </span><br><span class="line">fe80::e309:1477:6990:4355 dev br-lan lladdr c4:c6:e6:48:2b:72 REACHABLE </span><br><span class="line">fe80::5a69:6cff:fe4c:468b dev eth0 lladdr 58:69:6c:4c:46:8b router REACHABLE </span><br><span class="line">2001:250:2003:5782::1 dev eth0 FAILED </span><br></pre></td></tr></table></figure>
+
+<p>网关地址 <code>2001:250:2003:5782::1</code> 的状态显示为 <strong>FAILED</strong>。</p>
+<p>对 WAN 接口（eth0）进行抓包分析，观察到网关频繁发送 NS（Neighbor Solicitation）请求包，频率约为 1秒&#x2F;次，且本机并未回复 NA（Neighbor Advertisement）包：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IP6 (hlim 255, next-header ICMPv6 (58) payload length: 32) 2001:250:2003:5782::1 &gt; 2001:250:2003:5782::13: [icmp6 sum ok] ICMP6, neighbor solicitation, length 32, who has 2001:250:2003:5782::13 source link-address option (1), length 8 (1): 58:69:6c:4c:46:8b 0x0000: 5869 6c4c 468b</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">0000   9e 45 dd fc c1 89 58 69 6c 4c 46 8b 86 dd 60 00   .E....XilLF...`.</span><br><span class="line">0010   00 00 00 20 3a ff 20 01 02 50 20 03 57 82 00 00   ... :. ..P .W...</span><br><span class="line">0020   00 00 00 00 00 01 20 01 02 50 20 03 57 82 00 00   ...... ..P .W...</span><br><span class="line">0030   00 00 00 00 00 13 87 00 9e b8 00 00 00 00 20 01   .............. .</span><br><span class="line">0040   02 50 20 03 57 82 00 00 00 00 00 00 00 13 01 01   .P .W...........</span><br><span class="line">0050   58 69 6c 4c 46 8b                                 XilLF.</span><br></pre></td></tr></table></figure>
+
+<p>尝试 Ping <code>2001:250:2003:5782::1</code> 及其他 IPv6 地址，发包显示正常，但无任何回包。</p>
+<p>同时对 TUN 接口抓包，未见相关 NS 包流入，排除了数据包被错误路由至 TUN 的可能性。</p>
+<p><strong>初步结论：</strong> 问题出在 Linux 内核未能正确响应来自网关的 NS 请求，导致邻居发现失败，连接中断。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>使用 <code>ndppd</code> 守护进程来代理响应 NDP 请求。</p>
+<p>安装 <code>ndppd</code> 软件包，配置文件如下（强制回应匹配规则的 NS 包）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">route-ttl 30000</span><br><span class="line">proxy eth0 &#123;</span><br><span class="line">    router yes</span><br><span class="line">    timeout 500</span><br><span class="line">    ttl 30000</span><br><span class="line">    rule 2001:250:2003:5782::/64 &#123;</span><br><span class="line">        static</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重启 <code>ndppd</code> 后，日志中可能会出现警告：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(warning) Low prefix length (64 &lt;= 120) when using &#x27;static&#x27; method</span><br></pre></td></tr></table></figure>
+
+<p>该警告可忽略。实测中 <code>auto</code> 等模式无法解决此问题，必须使用 <code>static</code>。</p>
+<p>虽然 <code>static</code> 模式会强制对前缀范围内所有 IPv6 地址的查询都回应 NA 包，但在校园网这种特定环境下，解决连通性是首要目标。</p>
+<p>再次抓包确认，网关的 NS 泛洪已停止，且每次 NS 请求均收到了正确的 NA 包回复：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">IP6 (flowlabel 0xa2c6e, hlim 255, next-header ICMPv6 (58) payload length: 32) 2001:250:2003:5782::13 &gt; 2001:250:2003:5782::1: [icmp6 sum ok] ICMP6, neighbor advertisement, length 32, tgt is 2001:250:2003:5782::13, Flags [router, solicited]</span><br><span class="line">   destination link-address option (2), length 8 (1): 9e:45:dd:fc:c1:89</span><br><span class="line">     0x0000:  9e45 ddfc c189</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">0000   58 69 6c 4c 46 8b 9e 45 dd fc c1 89 86 dd 60 00   XilLF..E......`.</span><br><span class="line">0010   12 ba 00 20 3a ff 20 01 02 50 20 03 57 82 00 00   ... :. ..P .W...</span><br><span class="line">0020   00 00 00 00 00 13 20 01 02 50 20 03 57 82 00 00   ...... ..P .W...</span><br><span class="line">0030   00 00 00 00 00 01 88 00 aa 2c c0 00 00 00 20 01   .........,.... .</span><br><span class="line">0040   02 50 20 03 57 82 00 00 00 00 00 00 00 13 02 01   .P .W...........</span><br><span class="line">0050   9e 45 dd fc c1 89                                 .E....</span><br></pre></td></tr></table></figure>
+
+<p>至此问题解决。虽未完全厘清底层内核行为的具体原因（可能与 sing-box 复杂的路由策略或 iStoreOS 的特定内核配置有关），但该方案目前运行稳定。</p>
+</article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    
+
+</div>
+
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">较早文章</div><a href="/post/xray-server-xtls-xhttp/">Xray 服务端搭建 XTLS + XHTTP 教程</a></div></section></div>
+
+<div class="related-wrap" id="related-posts">
+    <section class='header'>
+      <div class='title cap theme'>您可能感兴趣的文章</div>
+    </section>
+    <section class='body'>
+    <div class="related-posts"><a class="item" href="\post\introduction-to-nano-pi-r3s\" title="从零开始 NanoPi R3S"><span class="title">从零开始 NanoPi R3S</span><span class="excerpt">近几天购置了一台 NanoPi R3S 作为主路由使用，本文将记录从零开始配置的过程。</span></a><a class="item" href="\post\openwrt-sing-box-tun\" title="在 NanoPi R3S 上配置 sing-box 的 TUN 模式"><span class="title">在 NanoPi R3S 上配置 sing-box 的 TUN 模式</span><span class="excerpt">接上一篇从零开始 NanoPi R3S，本文将介绍如何在 NanoPi R3S 上配置 sing-box 的 TUN 模式。</span></a><a class="item" href="\post\azure-VM-creation-guide\" title="使用 Azure 学生订阅创建免费支持 IPv4 和 IPv6 的 Azure 虚拟机"><span class="title">使用 Azure 学生订阅创建免费支持 IPv4 和 IPv6 的 Azure 虚拟机</span><span class="excerpt">创建支持 IPv4 和 IPv6 的 Azure 虚拟机</span></a><a class="item" href="\post\bypass-campus-network\" title="绕过校园网认证"><span class="title">绕过校园网认证</span><span class="excerpt">本文仅供研究和测试，请勿将其用于任何收费或违法活动，后果自负。</span></a><a class="item" href="\post\free-trojan\" title="利用 BPB 面板漏洞获取免费 Trojan 节点"><span class="title">利用 BPB 面板漏洞获取免费 Trojan 节点</span><span class="excerpt">利用高于 2.5.3 版本的 BPB-Worker-Panel 面板漏洞，获取大量免费的 Trojan 节点。</span></a></div></section></div>
+
+
 
 
 <footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">LFWQSP2641</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
 </div></footer>
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
-</aside><div class='float-panel'>
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="toc-text">问题描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5"><span class="toc-text">故障排查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-text">解决方案</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+</div></aside><div class='float-panel'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
   </button>
