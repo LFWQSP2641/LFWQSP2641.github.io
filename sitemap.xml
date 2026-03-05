@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.lfwqsp2641.cfd/post/bypass-campus-network/</loc>
+    
+    <lastmod>2026-03-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.lfwqsp2641.cfd/post/fix-scunet-ipv6/</loc>
     
     <lastmod>2026-03-05</lastmod>
@@ -59,15 +68,6 @@
     <loc>https://blog.lfwqsp2641.cfd/post/ventoy-gpt-ubuntu-24-guide/</loc>
     
     <lastmod>2025-10-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.lfwqsp2641.cfd/post/bypass-campus-network/</loc>
-    
-    <lastmod>2025-06-16</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
