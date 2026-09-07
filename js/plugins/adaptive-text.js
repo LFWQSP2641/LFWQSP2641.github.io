@@ -1,13 +1,13 @@
 // 文字自适应颜色 DOM 插件
-// 扫描 [data-text-adaptive] 元素，解析背景来源（--cover-url → --bg-url →
+// 扫描 [data-text-adaptive] 元素，解析背景来源（--adaptive-background → --cover-url → --bg-url →
 // background-image → background-color），调用 stellar.color 计算文字颜色，
-// 写入内联 --text-banner 与 --text-banner-theme。
+// 写入内联 --text-banner 与 --text-banner-theme；Wiki 封面另写入主题色蒙版变量。
 // 属性值：
 //   theme（默认）  背景图平均色 lighten/darken（两种变量同色）
 //   contrast       黑白对比（两种变量同色）
 //   split          大字（标题/headline）用 contrast，小字（caption/subtitle/面包屑等）用 theme
 // 用户显式覆盖优先：元素已有内联 --text-banner 或内联 color 时跳过。
-// 由 layout/_plugins/adaptive-text.ejs 在页面存在目标元素时懒加载。
+// 由 runtime feature adapter 在页面存在目标元素时按需加载并挂载。
 
 function parseCssUrl(value) {
   if (!value) {
@@ -19,6 +19,10 @@ function parseCssUrl(value) {
 
 function resolveBackground(el) {
   var style = window.getComputedStyle(el);
+  var adaptiveBackground = stellar.color.parse(style.getPropertyValue('--adaptive-background'));
+  if (adaptiveBackground) {
+    return { type: 'color', rgb: adaptiveBackground };
+  }
   var cover = parseCssUrl(style.getPropertyValue('--cover-url'));
   if (cover) {
     return { type: 'image', url: cover };
@@ -85,7 +89,41 @@ function setSplitTextColors(el, rgb) {
   }
 }
 
-function applyToElement(el) {
+// Wiki 卡片的 Today 风格内容层使用封面平均色：保留色相，增强弱饱和度后压低明度，
+// 让满不透明蒙版下的白色文字始终可读。变量写到 .wiki-card：蒙版用深色版本，
+// hover 边框使用同源但提高 20 个明度点的版本。
+function setWikiOverlayColor(el, rgb) {
+  var node = el.parentElement;
+  while (node && node.nodeType === 1) {
+    if ((' ' + node.className + ' ').indexOf(' wiki-card ') !== -1) {
+      var themed = stellar.color.enhanceSaturation(rgb, { minSaturation: 0.45, boostBelow: 0.35 });
+      var overlay = stellar.color.darken(themed, 0.26);
+      var border = stellar.color.lighten(themed, 0.46);
+      if (overlay) {
+        node.style.setProperty('--wiki-overlay-color', overlay);
+      }
+      if (border) {
+        node.style.setProperty('--wiki-border-color', border);
+      }
+      return;
+    }
+    node = node.parentElement;
+  }
+}
+
+// Wiki 卡片主题色确定后（包括提取失败时的 CSS 回退）通知索引页。
+// 覆盖层会同时等待原图 load，避免先用默认主题色绘制、再切换为平均色。
+function notifyWikiOverlayReady(el) {
+  var ownerDocument = el && el.ownerDocument;
+  if (!el || !el.dispatchEvent || !ownerDocument || !ownerDocument.createEvent) {
+    return;
+  }
+  var event = ownerDocument.createEvent('Event');
+  event.initEvent('wiki-overlay-ready', true, false);
+  el.dispatchEvent(event);
+}
+
+function applyToElement(el, isActive) {
   // 用户显式覆盖优先：首次处理时元素已有内联 --text-banner 或内联 color 则跳过
   // （插件自身写入的变量不视为用户覆盖，主题切换重算时需重新应用）
   var isFirst = !appliedElements.has(el);
@@ -103,6 +141,10 @@ function applyToElement(el) {
     } else {
       setTextColor(el, styleName, rgb);
     }
+    if (styleName === 'split' && el.parentElement && (' ' + el.parentElement.className + ' ').indexOf(' wiki-card-cover ') !== -1) {
+      setWikiOverlayColor(el, rgb);
+      notifyWikiOverlayReady(el);
+    }
     appliedElements.add(el);
   };
   if (bg.type === 'color') {
@@ -110,37 +152,56 @@ function applyToElement(el) {
   } else {
     var backdrop = resolveBackdrop(el);
     stellar.color.getAverageColor(bg.url, { background: backdrop }).then(function (rgb) {
+      if (!isActive()) return;
       if (rgb) {
         apply(rgb);
+      } else if (styleName === 'split' && el.parentElement && (' ' + el.parentElement.className + ' ').indexOf(' wiki-card-cover ') !== -1) {
+        // 平均色提取失败时不写变量，保留 CSS 回退色；但仍须解除 Wiki 覆盖层等待。
+        notifyWikiOverlayReady(el);
       }
     });
   }
 }
 
-var adaptiveTextElements = [];
 var appliedElements = new WeakSet();
 
-function applyAdaptiveText(elements) {
+function applyAdaptiveText(elements, isActive) {
   if (!window.stellar || !window.stellar.color || !elements || elements.length === 0) {
     return;
   }
-  adaptiveTextElements = Array.prototype.slice.call(elements);
+  var active = typeof isActive === 'function' ? isActive : function () { return true; };
   for (var i = 0; i < elements.length; i++) {
-    applyToElement(elements[i]);
+    applyToElement(elements[i], active);
   }
 }
 
-// 主题明暗切换时重算：透明背景图的合成背景随 data-theme 变化，颜色需重新计算
-if (window.MutationObserver && document.documentElement) {
-  new MutationObserver(function () {
-    applyAdaptiveText(adaptiveTextElements);
-    if (typeof window.refreshPinNavColor === 'function') {
-      window.refreshPinNavColor();
-    }
-  }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+function mountAdaptiveText(elements) {
+  var active = true;
+  var mountedElements = Array.prototype.slice.call(elements || []);
+  var ownerDocument = mountedElements[0] && mountedElements[0].ownerDocument;
+  var observer = null;
+  var isActive = function () { return active; };
+  applyAdaptiveText(mountedElements, isActive);
+  // 主题明暗切换时重算：透明背景图的合成背景随 data-theme 变化，颜色需重新计算
+  if (window.MutationObserver && ownerDocument && ownerDocument.documentElement) {
+    observer = new MutationObserver(function () {
+      applyAdaptiveText(mountedElements, isActive);
+      if (typeof window.refreshPinNavColor === 'function') {
+        window.refreshPinNavColor();
+      }
+    });
+    observer.observe(ownerDocument.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  }
+  return function () {
+    active = false;
+    mountedElements = [];
+    observer?.disconnect();
+    observer = null;
+  };
 }
 
 // 供轮播箭头等场景复用：解析元素背后实际渲染背景色
 window.resolveAdaptiveBackdrop = resolveBackdrop;
 
 window.applyAdaptiveText = applyAdaptiveText;
+window.stellarAdaptiveText = { mount: mountAdaptiveText };

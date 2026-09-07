@@ -45,6 +45,26 @@ const util = {
     }
   },
 
+  share: async (button) => {
+    if (!button) return;
+    const data = {
+      title: button.dataset.shareTitle || '',
+      text: button.dataset.shareText || button.dataset.shareTitle || '',
+      url: button.dataset.shareUrl || ''
+    };
+    try {
+      const supported = typeof navigator.share === 'function'
+        && (typeof navigator.canShare !== 'function' || navigator.canShare(data));
+      if (supported) {
+        await navigator.share(data);
+        return;
+      }
+    } catch (error) {
+      if (error?.name === 'AbortError') return;
+    }
+    util.copy(button.dataset.copyTarget, button.dataset.copyMessage);
+  },
+
   toggle: (id) => {
     const el = document.getElementById(id);
     if (el) {
@@ -95,30 +115,260 @@ const hud = {
 
 // defines
 
-const l_body = document.querySelector('.l_body');
+const siteShell = document.querySelector('.site-shell');
+const leftbarStateKey = 'stellar:v2:leftbar-state';
+const leftbarDrawerQuery = '(max-width: 768px)';
+const leftbarHiddenQuery = '(max-width: 768px)';
+const rightbarDrawerQuery = '(max-width: 1180px)';
+let shellDrawerTrigger = null;
+let searchDialogTrigger = null;
+let searchDialogRestoreFocus = true;
+let shellInputModality = 'pointer';
 
-const sidebar = {
-  leftbar: () => {
-    if (l_body) {
-      l_body.toggleAttribute('leftbar');
-      l_body.removeAttribute('rightbar');
-    }
-  },
-  rightbar: () => {
-    if (l_body) {
-      l_body.toggleAttribute('rightbar');
-      l_body.removeAttribute('leftbar');
-    }
-  },
-  dismiss: () => {
-    if (l_body) {
-      l_body.removeAttribute('leftbar');
-      l_body.removeAttribute('rightbar');
-    }
-  },
-  toggleTOC: () => {
-    document.querySelector('#data-toc').classList.toggle('collapse');
+function regionElement(region) {
+  return document.getElementById(region + '-region');
+}
+
+function regionUsesDrawer(region) {
+  if (typeof window.matchMedia !== 'function') return false;
+  return window.matchMedia(region === 'leftbar' ? leftbarDrawerQuery : rightbarDrawerQuery).matches;
+}
+
+function regionHiddenWhenClosed(region) {
+  if (typeof window.matchMedia !== 'function') return false;
+  if (region === 'leftbar') return window.matchMedia(leftbarHiddenQuery).matches;
+  return regionUsesDrawer(region);
+}
+
+function setRegionInteractive(region, interactive) {
+  const element = regionElement(region);
+  if (!element) return;
+  const hidden = regionHiddenWhenClosed(region);
+  element.inert = hidden && !interactive;
+  if (hidden && !interactive) {
+    element.setAttribute('aria-hidden', 'true');
+  } else {
+    element.removeAttribute('aria-hidden');
   }
+}
+
+function syncLeftbarControls() {
+  const drawer = regionUsesDrawer('leftbar');
+  const expanded = drawer
+    ? siteShell?.dataset.drawer === 'leftbar'
+    : document.documentElement.dataset.leftbarState !== 'collapsed';
+  document.querySelectorAll('[data-shell-action="toggle-leftbar"]').forEach(function (button) {
+    button.setAttribute('aria-expanded', String(expanded));
+    button.setAttribute('aria-label', drawer
+      ? (expanded ? 'Close leftbar' : 'Open leftbar')
+      : (expanded ? 'Collapse leftbar' : 'Expand leftbar'));
+  });
+}
+
+function syncDrawerControls() {
+  const openRegion = siteShell?.dataset.drawer || '';
+  ['leftbar', 'rightbar'].forEach(function (region) {
+    const open = openRegion === region && regionUsesDrawer(region);
+    document.querySelectorAll('[data-shell-action="toggle-' + region + '-drawer"]').forEach(function (button) {
+      button.setAttribute('aria-expanded', String(open));
+      button.setAttribute('aria-label', (open ? 'Close ' : 'Open ') + region);
+    });
+    setRegionInteractive(region, open || !regionUsesDrawer(region));
+  });
+}
+
+function focusRegion(region) {
+  const element = regionElement(region);
+  element?.querySelector('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])')?.focus();
+}
+
+function dismissDrawer(options) {
+  if (!siteShell) return;
+  const restoreFocus = options?.restoreFocus !== false;
+  const wasOpen = !!siteShell.dataset.drawer;
+  delete siteShell.dataset.drawer;
+  syncDrawerControls();
+  syncLeftbarControls();
+  if (wasOpen && restoreFocus && shellDrawerTrigger?.focus) shellDrawerTrigger.focus();
+  if (wasOpen) shellDrawerTrigger = null;
+}
+
+function toggleDrawer(region, trigger) {
+  if (!siteShell || !regionUsesDrawer(region) || !regionElement(region)) return;
+  const open = siteShell.dataset.drawer === region;
+  if (open) {
+    dismissDrawer();
+    return;
+  }
+  shellDrawerTrigger = trigger || document.activeElement;
+  siteShell.dataset.drawer = region;
+  syncDrawerControls();
+  syncLeftbarControls();
+  focusRegion(region);
+}
+
+function toggleLeftbarState() {
+  const root = document.documentElement;
+  const state = root.dataset.leftbarState === 'collapsed' ? 'expanded' : 'collapsed';
+  root.dataset.leftbarState = state;
+  try { localStorage.setItem(leftbarStateKey, state); } catch (error) {}
+  syncLeftbarControls();
+}
+
+function toggleLeftbar(trigger) {
+  if (regionUsesDrawer('leftbar')) {
+    toggleDrawer('leftbar', trigger);
+    return;
+  }
+  toggleLeftbarState();
+}
+
+function searchDialogElement() {
+  return document.getElementById('site-search-dialog');
+}
+
+function searchScopeOption(dialog, value) {
+  return dialog?.querySelector('[data-search-scope-option="' + value + '"]');
+}
+
+function applySearchScope(dialog, value, refresh = true) {
+  const input = dialog?.querySelector('.search-input');
+  const group = dialog?.querySelector('.search-dialog__scope');
+  if (!input || !group) return;
+  const selected = ['all', 'blog', 'current'].includes(value) ? value : 'all';
+  const option = searchScopeOption(dialog, selected);
+  const radio = option?.querySelector('input[type="radio"]');
+  if (!option || option.hidden || !radio) return;
+
+  if (selected === 'current') {
+    input.dataset.domain = group.dataset.currentDomain || '';
+  } else if (selected === 'blog') {
+    input.dataset.domain = 'blog';
+  } else {
+    input.dataset.domain = '';
+  }
+  radio.checked = true;
+  if (refresh && input.value.trim().length > 0) {
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+}
+
+function configureSearchScope(dialog, trigger) {
+  const group = dialog?.querySelector('.search-dialog__scope');
+  if (!group) return false;
+  const blogOption = searchScopeOption(dialog, 'blog');
+  const currentOption = searchScopeOption(dialog, 'current');
+  const currentLabel = currentOption?.querySelector('[data-search-scope-current-label]');
+  const currentDomain = trigger?.dataset?.searchDomain || '';
+  const hasBlog = trigger?.dataset?.searchDomainBlog === 'true';
+  const hasCurrent = currentDomain.length > 0 && currentDomain !== 'blog';
+
+  blogOption.hidden = !hasBlog;
+  currentOption.hidden = !hasCurrent;
+  if (currentLabel) currentLabel.textContent = trigger?.dataset?.searchDomainLabel || '';
+  group.dataset.currentDomain = currentDomain;
+  group.hidden = 1 + Number(hasBlog) + Number(hasCurrent) < 2;
+
+  const selected = hasCurrent ? 'current' : (hasBlog ? 'blog' : 'all');
+  applySearchScope(dialog, selected, false);
+  return true;
+}
+
+function closeSearch() {
+  const dialog = searchDialogElement();
+  if (!dialog?.open) return;
+  dialog.close();
+  document.documentElement.removeAttribute('data-search-open');
+  if (searchDialogRestoreFocus && searchDialogTrigger?.focus) searchDialogTrigger.focus();
+  else if (searchDialogTrigger?.blur) searchDialogTrigger.blur();
+  searchDialogTrigger = null;
+  searchDialogRestoreFocus = true;
+}
+
+function openSearch(trigger, restoreFocus = true) {
+  const dialog = searchDialogElement();
+  const input = dialog?.querySelector('.search-input');
+  const wrapper = dialog?.querySelector('.search-wrapper');
+  const result = dialog?.querySelector('.search-result');
+  if (!dialog || !input) return;
+  searchDialogTrigger = trigger || document.activeElement;
+  searchDialogRestoreFocus = restoreFocus;
+  input.value = '';
+  if (!configureSearchScope(dialog, trigger)) {
+    input.dataset.algoliaFilterPath = trigger?.dataset?.algoliaFilterPath || '';
+  }
+  if (wrapper) {
+    wrapper.setAttribute('searching', 'false');
+    wrapper.classList.remove('noresult');
+  }
+  result?.replaceChildren();
+  if (!dialog.open) dialog.showModal();
+  document.documentElement.setAttribute('data-search-open', '');
+  input.focus();
+}
+
+function toggleToc(trigger) {
+  const widget = document.querySelector('#data-toc');
+  if (!widget) return;
+  const collapsed = widget.classList.toggle('collapse');
+  trigger?.classList.toggle('is-active', collapsed);
+  trigger?.setAttribute('aria-pressed', String(collapsed));
+}
+
+const shellActions = {
+  'toggle-leftbar-drawer': function (trigger) { toggleDrawer('leftbar', trigger); },
+  'toggle-rightbar-drawer': function (trigger) { toggleDrawer('rightbar', trigger); },
+  'dismiss-drawer': function () { dismissDrawer(); },
+  'toggle-leftbar': function (trigger) { toggleLeftbar(trigger); },
+  'open-search': function (trigger) { openSearch(trigger, shellInputModality !== 'pointer'); },
+  'close-search': function () { closeSearch(); },
+  'toggle-toc': function (trigger) { toggleToc(trigger); }
+};
+
+syncLeftbarControls();
+syncDrawerControls();
+document.addEventListener('pointerdown', function () {
+  shellInputModality = 'pointer';
+});
+document.addEventListener('click', function (event) {
+  const trigger = event.target?.closest?.('[data-shell-action]');
+  const action = trigger?.dataset?.shellAction;
+  if (!action || typeof shellActions[action] !== 'function') return;
+  event.preventDefault();
+  shellActions[action](trigger);
+});
+document.addEventListener('keydown', function (event) {
+  shellInputModality = 'keyboard';
+  if (event.key === 'Escape') {
+    if (searchDialogElement()?.open) closeSearch();
+    else dismissDrawer();
+  }
+});
+const searchDialog = searchDialogElement();
+searchDialog?.addEventListener('cancel', function (event) {
+  event.preventDefault();
+  closeSearch();
+});
+searchDialog?.addEventListener('click', function (event) {
+  if (event.target === searchDialog) closeSearch();
+});
+searchDialog?.addEventListener('change', function (event) {
+  if (event.target?.name !== 'site-search-scope') return;
+  applySearchScope(searchDialog, event.target.value);
+});
+if (typeof window.matchMedia === 'function') {
+  [leftbarDrawerQuery, leftbarHiddenQuery, rightbarDrawerQuery].filter(function (query, index, queries) {
+    return queries.indexOf(query) === index;
+  }).map(function (query) {
+    return window.matchMedia(query);
+  }).forEach(function (media) {
+    const handleChange = function () {
+      dismissDrawer({ restoreFocus: false });
+      syncDrawerControls();
+    };
+    if (typeof media.addEventListener === 'function') media.addEventListener('change', handleChange);
+    else if (typeof media.addListener === 'function') media.addListener(handleChange);
+  });
 }
 
 // 通用平滑滚动（自定义动画，TOC / 回到顶部 / 参与讨论共用）
@@ -177,7 +427,7 @@ function rebuildToc(scope) {
     return;
   }
   const ol = document.createElement('ol');
-  ol.className = 'toc';
+  ol.className = 'toc ui-collection-adapter';
   const stack = [];
   headings.forEach(function (h) {
     const id = h.id;
@@ -188,7 +438,7 @@ function rebuildToc(scope) {
     const li = document.createElement('li');
     li.className = 'toc-item toc-level-' + level;
     const a = document.createElement('a');
-    a.className = 'toc-link';
+    a.className = 'toc-link ' + ctx.ui.classes.interactive;
     a.href = '#' + encodeURIComponent(id);
     const span = document.createElement('span');
     span.className = 'toc-text';
@@ -339,7 +589,7 @@ const init = {
       }, 50);
     });
   },
-  sidebar: () => {
+  tocLinks: () => {
     utils.dom("#data-toc a.toc-link").click(function (e) {
       const href = this.getAttribute("href");
       const id = href && href.indexOf("#") === 0 ? decodeURIComponent(href.slice(1)) : null;
@@ -353,11 +603,11 @@ const init = {
           window.history.pushState(null, "", href);
         }
       }
-      window.sidebar.dismiss();
+      dismissDrawer();
     });
   },
   wikiStart: () => {
-    utils.dom('#l_cover .l_cover.wiki .start-wrap a.button.start').click(function (e) {
+    utils.dom('#site-cover .cover-content.wiki .start-wrap a.button.start').click(function (e) {
       const href = this.getAttribute("href");
       const id = href && href.indexOf("#") === 0 ? decodeURIComponent(href.slice(1)) : null;
       const target = id && document.getElementById(id);
@@ -372,15 +622,57 @@ const init = {
       }
     });
   },
+  wikiCover: () => {
+    document.querySelectorAll('.wiki-cover-terminal').forEach(function (terminal) {
+      const code = terminal.querySelector('pre code');
+      const tabs = terminal.querySelectorAll('[role="tab"]');
+      function renderCodes(value) {
+        const lines = value.split(/\r?\n/).filter(function (line) {
+          return line.trim().length > 0;
+        });
+        terminal.dataset.codes = lines.join('\n');
+        code.innerHTML = '';
+        lines.forEach(function (line) {
+          const row = document.createElement('span');
+          row.textContent = line;
+          code.appendChild(row);
+        });
+      }
+      if (tabs.length > 0) {
+        renderCodes(tabs[0].getAttribute('data-codes') || '');
+      }
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          tabs.forEach(function (item) {
+            const active = item === tab;
+            item.classList.toggle('active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          renderCodes(tab.getAttribute('data-codes') || '');
+        });
+      });
+      const copy = terminal.querySelector('.wiki-cover-copy');
+      if (copy) {
+        copy.addEventListener('click', function () {
+          const value = terminal.dataset.codes || '';
+          if (!value || !navigator.clipboard) return;
+          navigator.clipboard.writeText(value).then(function () {
+            hud.toast(copy.getAttribute('data-copy-message') || 'Copied', 2500);
+          }).catch(function () {});
+        });
+      }
+    });
+
+  },
   leftbarScroll: () => {
-    const container = document.querySelector('.l_left .widgets');
+    const container = document.querySelector('.site-region--leftbar .site-region__body');
     if (container == null) {
       return;
     }
     const PREFIX = 'Stellar.leftbarScroll.';
     const encode = (s) => encodeURIComponent(String(s || ''));
     function scope() {
-      const wikiEl = document.querySelector('.doc-tree[data-wiki]');
+      const wikiEl = document.querySelector('.doc-tree-widget[data-wiki]');
       if (wikiEl != null) {
         return 'wiki:' + encode(wikiEl.getAttribute('data-wiki'));
       }
@@ -388,8 +680,8 @@ const init = {
       if (notebookEl != null) {
         return 'notebook:' + encode(notebookEl.getAttribute('data-notebook'));
       }
-      const body = document.querySelector('.l_body');
-      return 'layout:' + encode((body && body.getAttribute('layout')) || 'default');
+      const body = document.body;
+      return 'layout:' + encode((body && body.dataset.pageLayout) || 'default');
     }
     window.addEventListener('pagehide', function () {
       try {
@@ -409,7 +701,7 @@ const init = {
         return;
       }
       container.scrollTop = parseInt(value, 10) || 0;
-      const link = container.querySelector('a.link.active');
+      const link = container.querySelector('.ui-collection__item.is-active');
       if (link == null) {
         return;
       }
@@ -425,37 +717,42 @@ const init = {
       }
     } catch (e) {}
   },
-  navbarPin: () => {
-    // 列表页 navbar top 背景条状态切换：未吸顶为卡片样式（var(--card) + 文章卡片同款阴影），
-    // 吸顶后恢复玻璃效果。在吸顶边界切换 .pinned 类，视觉由 CSS 控制。
-    // 吸顶判定直接测 navbar 的实际视口位置，而非用 scrollY 推算：
+  listingNavPin: () => {
+    // Listing Nav 在吸顶边界切换 .is-pinned 类，视觉由 CSS 控制。
+    // 页面有 Topbar 时，pinned Listing Nav 进入 Topbar 内并复用其表面；无 Topbar 时保持独立容器外观。
+    // 吸顶判定直接测 Listing Nav 的实际视口位置，而非用 scrollY 推算：
     // 移动端浏览器顶栏伸缩会改变 scrollY（展开顶栏时 scrollY 减小），
-    // 即使 navbar 仍吸顶也可能跌破阈值，导致玻璃效果误消失。
-    const navbars = document.querySelectorAll('.navbar.top');
-    if (navbars.length === 0) {
+    // 即使 Listing Nav 仍吸顶也可能跌破阈值，导致玻璃效果误消失。
+    // 无轮播区页面（如 wiki）的 Listing Nav 在页面顶部即已吸顶，需额外要求页面实际滚动达到阈值，
+    // 否则默认保持卡片样式；回到顶部（滚动小于阈值）恢复卡片。
+    const listingNavs = document.querySelectorAll('.listing-nav');
+    if (listingNavs.length === 0) {
       return;
     }
     // 视口顶部允许的偏差（px），吸收亚像素/取整误差
     const TOLERANCE = 2;
+    // 页面滚动阈值（px）：未滚动时保持卡片样式，滚动达到该值后才切换玻璃效果
+    const SCROLL_THRESHOLD = 2;
     let states = [];
     function update() {
+      const scrolled = window.scrollY >= SCROLL_THRESHOLD;
       states.forEach((state) => {
-        const top = state.navbar.getBoundingClientRect().top;
-        state.bar.classList.toggle('pinned', top <= state.stickyTop + TOLERANCE);
+        const top = state.listingNav.getBoundingClientRect().top;
+        state.surface.classList.toggle('is-pinned', scrolled && top <= state.stickyTop + TOLERANCE);
       });
     }
     function measure() {
       states = [];
-      navbars.forEach((navbar) => {
-        const bar = navbar.querySelector('.navbar-blur');
-        if (bar == null) {
+      listingNavs.forEach((listingNav) => {
+        const surface = listingNav.querySelector('.listing-nav__surface');
+        if (surface == null) {
           return;
         }
         // getComputedStyle().top 自动兼容桌面 var(--gap-page) 与移动端 8pt
-        const stickyTop = parseFloat(getComputedStyle(navbar).top) || 16;
+        const stickyTop = parseFloat(getComputedStyle(listingNav).top) || 16;
         states.push({
-          navbar: navbar,
-          bar: bar,
+          listingNav: listingNav,
+          surface: surface,
           stickyTop: stickyTop
         });
       });
@@ -524,9 +821,9 @@ const init = {
     // 真实主站域名优先从 encoded（base64）反解，避免被「批量替换域名」的克隆站把提示指向自己
     const getOriginalHost = () => {
       try {
-        return atob(canonical.encoded || '') || canonical.originalHost || '';
+        return atob(canonical.encoded || '') || canonical.host || '';
       } catch (e) {
-        return canonical.originalHost || '';
+        return canonical.host || '';
       }
     };
     function originStatusCheck() {
@@ -591,7 +888,7 @@ const init = {
       if (isCurrentHostValid) {
         return;
       }
-      if (canonical.officialHosts?.includes(currentHost)) {
+      if (canonical.allowedHosts?.includes(currentHost)) {
         showTip(true);
         return;
       }
@@ -605,7 +902,7 @@ const init = {
     if (isCanonicalHostValid && isCurrentHostValid) {
       return;
     }
-    showTip(canonical.officialHosts?.includes(currentHost));
+    showTip(canonical.allowedHosts?.includes(currentHost));
   }
 
 }
@@ -613,16 +910,18 @@ const init = {
 
 // Stellar namespace
 window.stellar = window.stellar || {};
+stellar.toast = hud.toast;
 
 /**
  * Initialize page components
  */
 stellar.initPage = function () {
   init.toc();
-  init.sidebar();
+  init.tocLinks();
   init.wikiStart();
+  init.wikiCover();
   init.leftbarScroll();
-  init.navbarPin();
+  init.listingNavPin();
   init.relativeDate(document.querySelectorAll('#post-meta time'));
   init.registerTabsTag();
 };
