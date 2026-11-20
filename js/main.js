@@ -45,26 +45,6 @@ const util = {
     }
   },
 
-  share: async (button) => {
-    if (!button) return;
-    const data = {
-      title: button.dataset.shareTitle || '',
-      text: button.dataset.shareText || button.dataset.shareTitle || '',
-      url: button.dataset.shareUrl || ''
-    };
-    try {
-      const supported = typeof navigator.share === 'function'
-        && (typeof navigator.canShare !== 'function' || navigator.canShare(data));
-      if (supported) {
-        await navigator.share(data);
-        return;
-      }
-    } catch (error) {
-      if (error?.name === 'AbortError') return;
-    }
-    util.copy(button.dataset.copyTarget, button.dataset.copyMessage);
-  },
-
   toggle: (id) => {
     const el = document.getElementById(id);
     if (el) {
@@ -123,6 +103,10 @@ const rightbarDrawerQuery = '(max-width: 1180px)';
 let shellDrawerTrigger = null;
 let searchDialogTrigger = null;
 let searchDialogRestoreFocus = true;
+// 退场动画的安全兜底时长，需大于 search.styl 中 search-dialog-out 的 0.18s
+const searchCloseFallbackDelay = 260;
+let searchCloseTimer = null;
+let searchCloseListener = null;
 let shellInputModality = 'pointer';
 
 function regionElement(region) {
@@ -153,6 +137,7 @@ function setRegionInteractive(region, interactive) {
 }
 
 function syncLeftbarControls() {
+  syncRightbarFocus();
   const drawer = regionUsesDrawer('leftbar');
   const expanded = drawer
     ? siteShell?.dataset.drawer === 'leftbar'
@@ -165,7 +150,17 @@ function syncLeftbarControls() {
   });
 }
 
+function syncRightbarFocus() {
+  const rightbar = regionElement('rightbar');
+  if (!rightbar) return;
+  const compact = !regionUsesDrawer('rightbar') && regionElement('leftbar')
+    && document.documentElement.dataset.leftbarState === 'collapsed';
+  if (compact) rightbar.setAttribute('tabindex', '0');
+  else rightbar.removeAttribute('tabindex');
+}
+
 function syncDrawerControls() {
+  syncRightbarFocus();
   const openRegion = siteShell?.dataset.drawer || '';
   ['leftbar', 'rightbar'].forEach(function (region) {
     const open = openRegion === region && regionUsesDrawer(region);
@@ -253,6 +248,11 @@ function applySearchScope(dialog, value, refresh = true) {
   }
 }
 
+function searchMotionEnabled() {
+  if (typeof window.matchMedia !== 'function') return true;
+  return !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
 function configureSearchScope(dialog, trigger) {
   const group = dialog?.querySelector('.search-dialog__scope');
   if (!group) return false;
@@ -274,15 +274,51 @@ function configureSearchScope(dialog, trigger) {
   return true;
 }
 
-function closeSearch() {
-  const dialog = searchDialogElement();
-  if (!dialog?.open) return;
-  dialog.close();
+function clearSearchClosePending(dialog) {
+  if (searchCloseTimer !== null) {
+    clearTimeout(searchCloseTimer);
+    searchCloseTimer = null;
+  }
+  if (searchCloseListener) {
+    dialog.removeEventListener('animationend', searchCloseListener);
+    searchCloseListener = null;
+  }
+  dialog.classList.remove('is-closing');
+}
+
+// 锁定页面滚动会移除常驻滚动条，先把槽位宽度写进 CSS 变量供补位使用
+function syncSearchScrollbarGutter() {
+  const root = document.documentElement;
+  if (root.hasAttribute('data-search-open')) return;
+  const gutter = Math.max(0, window.innerWidth - root.clientWidth);
+  root.style.setProperty('--stellar-scrollbar-gutter', gutter + 'px');
+}
+
+// 关闭动画播放期间浮层仍处于打开状态，退出动画结束或兜底超时后才真正 close 并恢复焦点
+function finishSearchClose(dialog) {
+  clearSearchClosePending(dialog);
+  if (dialog.open) dialog.close();
   document.documentElement.removeAttribute('data-search-open');
   if (searchDialogRestoreFocus && searchDialogTrigger?.focus) searchDialogTrigger.focus();
   else if (searchDialogTrigger?.blur) searchDialogTrigger.blur();
   searchDialogTrigger = null;
   searchDialogRestoreFocus = true;
+}
+
+function closeSearch() {
+  const dialog = searchDialogElement();
+  if (!dialog?.open || searchCloseTimer !== null) return;
+  if (!searchMotionEnabled()) {
+    finishSearchClose(dialog);
+    return;
+  }
+  searchCloseListener = function (event) {
+    if (event.animationName !== 'search-dialog-out') return;
+    finishSearchClose(dialog);
+  };
+  dialog.classList.add('is-closing');
+  dialog.addEventListener('animationend', searchCloseListener);
+  searchCloseTimer = setTimeout(function () { finishSearchClose(dialog); }, searchCloseFallbackDelay);
 }
 
 function openSearch(trigger, restoreFocus = true) {
@@ -291,6 +327,7 @@ function openSearch(trigger, restoreFocus = true) {
   const wrapper = dialog?.querySelector('.search-wrapper');
   const result = dialog?.querySelector('.search-result');
   if (!dialog || !input) return;
+  clearSearchClosePending(dialog);
   searchDialogTrigger = trigger || document.activeElement;
   searchDialogRestoreFocus = restoreFocus;
   input.value = '';
@@ -303,6 +340,7 @@ function openSearch(trigger, restoreFocus = true) {
   }
   result?.replaceChildren();
   if (!dialog.open) dialog.showModal();
+  syncSearchScrollbarGutter();
   document.documentElement.setAttribute('data-search-open', '');
   input.focus();
 }
@@ -466,6 +504,45 @@ function rebuildToc(scope) {
   bindTocClick(widget);
 }
 
+// 指示条跟随目录自身坐标，目录滚动无需重复测量。
+function bindTocIndicator(widget) {
+  let frame = null;
+  const update = () => {
+    frame = null;
+    const toc = widget.querySelector('.toc');
+    if (!toc) return;
+    const active = toc.querySelector('a.toc-link.active');
+    if (!active || !active.getClientRects().length) {
+      toc.style.removeProperty('--toc-active-height');
+      toc.style.setProperty('--toc-active-opacity', '0');
+      return;
+    }
+    const bounds = active.getBoundingClientRect();
+    toc.style.setProperty('--toc-active-y', (bounds.top - toc.getBoundingClientRect().top) + 'px');
+    toc.style.setProperty('--toc-active-height', bounds.height + 'px');
+    toc.style.setProperty('--toc-active-opacity', '1');
+  };
+  const schedule = () => {
+    if (frame === null) frame = requestAnimationFrame(update);
+  };
+  const mutations = new MutationObserver(schedule);
+  mutations.observe(widget, { subtree: true, childList: true, attributes: true, attributeFilter: ['class', 'collapse'] });
+  mutations.observe(document.documentElement, { attributes: true, attributeFilter: ['data-leftbar-state'] });
+  const resize = new ResizeObserver(schedule);
+  resize.observe(widget);
+  const events = ['mouseenter', 'mouseleave', 'focusin', 'focusout', 'transitionend'];
+  events.forEach(type => widget.addEventListener(type, schedule));
+  window.addEventListener('resize', schedule);
+  schedule();
+  return () => {
+    mutations.disconnect();
+    resize.disconnect();
+    events.forEach(type => widget.removeEventListener(type, schedule));
+    window.removeEventListener('resize', schedule);
+    if (frame !== null) cancelAnimationFrame(frame);
+  };
+}
+
 function bindTocClick(widget) {
   if (tocClickBound.has(widget)) {
     return tocClickBound.get(widget);
@@ -490,7 +567,12 @@ function bindTocClick(widget) {
     }
   };
   widget.addEventListener('click', handler);
-  const cleanup = () => { widget.removeEventListener('click', handler); tocClickBound.delete(widget); };
+  const cleanupIndicator = bindTocIndicator(widget);
+  const cleanup = () => {
+    cleanupIndicator();
+    widget.removeEventListener('click', handler);
+    tocClickBound.delete(widget);
+  };
   tocClickBound.set(widget, cleanup);
   return cleanup;
 }
